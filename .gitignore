@@ -1,0 +1,11 @@
+*.exe
+*.dll
+*.pdb
+*.nupkg
+
+*.jar
+
+*.zip
+*.rar
+*.tar.gz
+*.7z
