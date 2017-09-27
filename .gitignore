@@ -9,3 +9,10 @@
 *.rar
 *.tar.gz
 *.7z
+
+*.userprefs
+**/packages/*
+**/.vs/*
+**/bin/*
+**/obj/*
+**/_ReSharper.Caches/*
