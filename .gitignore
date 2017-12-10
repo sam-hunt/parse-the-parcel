@@ -16,3 +16,5 @@
 **/bin/*
 **/obj/*
 **/_ReSharper.Caches/*
+
+**/node_modules/*
