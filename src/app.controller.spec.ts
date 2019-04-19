@@ -21,7 +21,7 @@ describe('AppController', () => {
     });
 
     describe('root endpoint', () => {
-        it('should define a method "getAppInfo"', () => {
+        it(`should define a method 'getAppInfo'`, () => {
             expect(appController.getAppInfo).toBeDefined();
         });
 
