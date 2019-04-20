@@ -1,6 +1,6 @@
 {
   "name": "parsetheparcel",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A microservice for building packaging solutions from provided parcel dimensions and weight.",
   "author": "Sam Hunt",
   "license": "MIT",
