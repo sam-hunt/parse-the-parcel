@@ -9,7 +9,7 @@ export class AppController {
     @Get()
     @Header('Content-Type', 'text/html')
     @ApiProduces('text/html')
-    @ApiOkResponse({ description: 'OK' })
+    @ApiOkResponse({ description: 'OK', type: String })
     @ApiOperation({ title: 'Display Application Information' })
     @ApiUseTags('app-info')
     getAppInfo(): string {

@@ -26,7 +26,7 @@ describe('AppController', () => {
         });
 
         it(`should call 'getAppInfo' on the appService`, async () => {
-            const mockResult = 'mock app info';
+            const mockResult: string = 'mock app info';
             jest.spyOn(appService, 'getAppInfo').mockImplementation(() => mockResult);
             expect(appController.getAppInfo()).toBe(mockResult);
             expect(appService.getAppInfo).toHaveBeenCalled();
