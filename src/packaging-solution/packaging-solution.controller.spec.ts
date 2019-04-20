@@ -49,8 +49,10 @@ describe('PackagingSolutionController', () => {
         });
 
         it(`should call 'getPackagingSolution' on the PackagingSolutionService when the parcel input is valid`, () => {
+            const mockSentResponse = 'mockSentResponse';
+            const mockResponse = { send: () => mockSentResponse };
             jest.spyOn(service, 'getPackagingSolution').mockImplementation(() => mockValidPackagingSolution);
-            expect(controller.getPackagingSolution(mockValidParcelDto, null)).toBe(mockValidPackagingSolution);
+            expect(controller.getPackagingSolution(mockValidParcelDto, mockResponse as any)).toBe(mockSentResponse);
             expect(service.getPackagingSolution).toHaveBeenCalled();
         });
 
