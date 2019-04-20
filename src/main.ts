@@ -6,7 +6,7 @@ async function bootstrap() {
     const app = await NestFactory.create(AppModule);
 
     const options = new DocumentBuilder()
-        .setTitle('Parse-the-Parcel Packaging Solution Service')
+        .setTitle('Parse-the-Parcel')
         .setDescription(process.env.npm_package_description)
         .setVersion(process.env.npm_package_version)
         .addTag('app-info', 'Application Information')
