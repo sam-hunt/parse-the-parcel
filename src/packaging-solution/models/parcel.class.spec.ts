@@ -32,27 +32,6 @@ describe('Parcel', () => {
         });
     });
 
-    describe('Self-validation of dimension properties (length, breadth, height, and weight)', () => {
-        it('should pass self-validation when all dimensions are positive numbers', () => {
-            expect(new Parcel(100, 200, 300, 1).isValidParcel()).toBe(true);
-        });
-
-        it('should fail self-validation when one or more dimensions are not numeric values', () => {
-            expect(new Parcel('hello' as unknown as number, 200, 300, 1).isValidParcel()).toBe(false);
-            expect(new Parcel('hello' as unknown as number, 'hello' as unknown as number, 300, 1).isValidParcel()).toBe(false);
-        });
-
-        it('should fail self-validation when one or more dimensions are negative numbers', () => {
-            expect(new Parcel(-100, 200, 300, 1).isValidParcel()).toBe(false);
-            expect(new Parcel(-100, -200, 300, 1).isValidParcel()).toBe(false);
-        });
-
-        it('should fail self-validation when one or more dimensions are zero', () => {
-            expect(new Parcel(0, 200, 300, 1).isValidParcel()).toBe(false);
-            expect(new Parcel(0, 0, 300, 1).isValidParcel()).toBe(false);
-        });
-    });
-
     describe('Checking whether the parcel is too heavy', () => {
         it('should not be too heavy if the weight is under 25kg', () => {
             expect(new Parcel(100, 200, 300, 1).isTooHeavy()).toBe(false);

@@ -1,15 +1,40 @@
 import { ApiModelProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsNumber, IsPositive } from 'class-validator';
 
 export class ParcelDto {
-    @ApiModelProperty()
+    @IsNotEmpty()
+    @IsNumber()
+    @IsPositive()
+    @ApiModelProperty({
+        description: 'The length of the parcel in millimetres',
+        example: 200,
+    })
     readonly length: number;
 
-    @ApiModelProperty()
+    @IsNotEmpty()
+    @IsNumber()
+    @IsPositive()
+    @ApiModelProperty({
+        description: 'The breadth of the parcel in millimetres',
+        example: 300,
+    })
     readonly breadth: number;
 
-    @ApiModelProperty()
+    @IsNotEmpty()
+    @IsNumber()
+    @IsPositive()
+    @ApiModelProperty({
+        description: 'The height of the parcel in millimetres',
+        example: 100,
+    })
     readonly height: number;
 
-    @ApiModelProperty()
+    @IsNotEmpty()
+    @IsNumber()
+    @IsPositive()
+    @ApiModelProperty({
+        description: 'The weight of the parcel in kilograms',
+        example: 3,
+    })
     readonly weight: number;
 }

@@ -19,8 +19,9 @@ export class PackagingSolutionService {
             return null;
         }
         for (const [solutionName, solutionParcel] of this.packagingSolutions.entries()) {
+            this.logger.log(`Testing parcel ${JSON.stringify(parcel.toDto())} inside ${solutionName} ${JSON.stringify(solutionParcel.toDto())}`);
             if (parcel.canFitInside(solutionParcel)) {
-                const packagingSolution: PackagingSolutionDto = { solutionName, solutionParcel };
+                const packagingSolution: PackagingSolutionDto = { solutionName, solutionParcel: solutionParcel.toDto() };
                 this.logger.log(`Found a minimal packaging solution: ${JSON.stringify(packagingSolution)}`);
                 return packagingSolution;
             }

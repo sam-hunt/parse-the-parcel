@@ -23,12 +23,6 @@ export class Parcel {
         };
     }
 
-    public isValidParcel(): boolean {
-        return [this.length, this.breadth, this.height, this.weight].every(dimension => {
-            return typeof dimension === 'number' && dimension > 0;
-        });
-    }
-
     public isTooHeavy(): boolean {
         return this.weight > 25;
     }

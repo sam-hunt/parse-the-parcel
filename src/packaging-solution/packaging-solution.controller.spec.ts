@@ -1,9 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PackagingSolutionController } from './packaging-solution.controller';
 import { PackagingSolutionService } from './packaging-solution.service';
-import { Parcel } from './models/parcel.class';
 import { ParcelDto } from './models/parcel.dto';
-import { HttpException } from '@nestjs/common';
+import { HttpException, NotImplementedException } from '@nestjs/common';
 import { PackagingSolutionDto } from './models/packaging-solution.dto';
 
 describe('PackagingSolutionController', () => {
@@ -33,10 +32,6 @@ describe('PackagingSolutionController', () => {
     describe('Packaging Solution Resolver', () => {
         it(`should define a method 'getPackagingSolution'`, () => {
             expect(controller.getPackagingSolution).toBeDefined();
-        });
-
-        it(`should throw an HttpException on parcel input missing properties`, () => {
-            expect(() => controller.getPackagingSolution({} as ParcelDto, null)).toThrow(HttpException);
         });
 
         it(`should throw an HttpException on parcel input having invalid property values`, () => {
