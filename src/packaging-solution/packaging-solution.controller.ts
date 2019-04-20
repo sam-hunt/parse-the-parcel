@@ -7,7 +7,7 @@ import { PackagingSolutionDto } from './models/packaging-solution.dto';
 import { PackagingSolutionService } from './packaging-solution.service';
 import { Parcel } from './models/parcel.class';
 
-@Controller('packaging-solution')
+@Controller('v1/packaging-solution')
 export class PackagingSolutionController {
     private readonly logger = new Logger(PackagingSolutionController.name);
 
@@ -31,12 +31,16 @@ export class PackagingSolutionController {
         this.logger.log(`Received the following parcel for parsing: ${JSON.stringify(parcelDto)}`);
         const parcel: Parcel = Parcel.fromDto(parcelDto);
         if (!parcel || !parcel.isValidParcel()) {
-            throw new HttpException('Parcel must have positive numeric dimensions', 400);
+            const message = `Parcel must have positive numeric dimensions`;
+            this.logger.warn(`Recieved an invalid parcel. Returning 400 - ${message}`);
+            throw new HttpException(message, 400);
         }
         const packagingSolution: PackagingSolutionDto = this.packagingSolutionService.getPackagingSolution(parcel);
 
         if (!packagingSolution) {
-            throw new HttpException('Parcel dimensions or weight exceed all supported packaging solutions', 413);
+            const message = `Parcel dimensions or weight exceed all supported packaging solutions`;
+            this.logger.warn(`Failed to resolve a packaging solution. Returning 413 - ${message}`);
+            throw new HttpException(message, 413);
         }
         return response.send(packagingSolution);
     }
