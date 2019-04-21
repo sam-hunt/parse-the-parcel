@@ -5,6 +5,8 @@ import { AppModule } from './../src/app.module';
 describe('AppController (e2e)', () => {
     let app;
 
+    const rootEndpoint = '/';
+
     beforeEach(async () => {
         const moduleFixture: TestingModule = await Test.createTestingModule({
             imports: [AppModule],
@@ -15,23 +17,26 @@ describe('AppController (e2e)', () => {
     });
 
     describe('/ (root endpoint)', () => {
-        it('/ (GET) should succeed with 200 success code', () => {
+        it('GET should return 200 with a text/html content response', () => {
             return request(app.getHttpServer())
-                .get('/')
-                .expect(200);
+                .get(rootEndpoint)
+                .expect(200)
+                .then(response => {
+                    expect(response.type).toBe('text/html');
+                });
         });
 
-        it('/ (GET) should return a welcome message', () => {
+        it('GET should return 200 and contain welcome message', () => {
             return request(app.getHttpServer())
-                .get('/')
+                .get(rootEndpoint)
                 .then(response => {
                     expect(response.text).toMatch('Welcome to Parse-the-Parcel');
                 });
         });
 
-        it('/ (GET) should contain a link to the documentation', () => {
+        it('GET should return 200 and contain a link to the documentation', () => {
             return request(app.getHttpServer())
-                .get('/')
+                .get(rootEndpoint)
                 .then(response => {
                     expect(response.text).toMatch('<a href="/docs">');
                 });
