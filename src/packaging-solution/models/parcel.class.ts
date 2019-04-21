@@ -23,10 +23,6 @@ export class Parcel {
         };
     }
 
-    public isTooHeavy(): boolean {
-        return this.weight > 25;
-    }
-
     /**
      * @description determine whether this parcel can be rotated to fit within another parcel
      * @param anotherParcel the parcel to test whether this parcel can fit inside or not
