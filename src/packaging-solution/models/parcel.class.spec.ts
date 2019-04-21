@@ -32,23 +32,6 @@ describe('Parcel', () => {
         });
     });
 
-    describe('Checking whether the parcel is too heavy', () => {
-        it('should not be too heavy if the weight is under 25kg', () => {
-            expect(new Parcel(100, 200, 300, 1).isTooHeavy()).toBe(false);
-            expect(new Parcel(100, 200, 300, 24.9).isTooHeavy()).toBe(false);
-            expect(new Parcel(100, 200, 300, -Infinity).isTooHeavy()).toBe(false);
-        });
-
-        it('should not be too heavy if the weight is exactly 25kg', () => {
-            expect(new Parcel(100, 200, 300, 25).isTooHeavy()).toBe(false);
-        });
-
-        it('should be too heavy if the weight is over 25kg', () => {
-            expect(new Parcel(100, 200, 300, 25.1).isTooHeavy()).toBe(true);
-            expect(new Parcel(100, 200, 300, Infinity).isTooHeavy()).toBe(true);
-        });
-    });
-
     describe('Checking whether the parcel can fit inside another parcel', () => {
         it('should pass when all dimensions are less than the other parcel', () => {
             expect(new Parcel(100, 200, 300, 1).canFitInside(new Parcel(200, 300, 400, 1))).toBe(true);
