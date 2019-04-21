@@ -7,7 +7,7 @@ export class ParcelDto {
     @IsPositive()
     @ApiModelProperty({
         description: 'The length of the parcel in millimetres',
-        example: 200,
+        example: 300,
     })
     readonly length: number;
 
@@ -16,7 +16,7 @@ export class ParcelDto {
     @IsPositive()
     @ApiModelProperty({
         description: 'The breadth of the parcel in millimetres',
-        example: 300,
+        example: 400,
     })
     readonly breadth: number;
 
@@ -25,7 +25,7 @@ export class ParcelDto {
     @IsPositive()
     @ApiModelProperty({
         description: 'The height of the parcel in millimetres',
-        example: 100,
+        example: 200,
     })
     readonly height: number;
 

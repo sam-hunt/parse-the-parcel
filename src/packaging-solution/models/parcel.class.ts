@@ -1,4 +1,5 @@
 import { ParcelDto } from './parcel.dto';
+import { plainToClass } from 'class-transformer';
 
 export class Parcel {
     readonly length: number;
@@ -15,12 +16,12 @@ export class Parcel {
     }
 
     public toDto(): ParcelDto {
-        return {
+        return plainToClass(ParcelDto, {
             length: this.length,
             breadth: this.breadth,
             height: this.height,
             weight: this.weight,
-        };
+        });
     }
 
     /**

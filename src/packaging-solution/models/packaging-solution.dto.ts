@@ -6,8 +6,14 @@ export class PackagingSolutionDto {
         description: 'The name of the packaging solution',
         example: 'medium',
     })
-    readonly solutionName: string;
+    readonly name: string;
+
+    @ApiModelProperty({
+        description: 'The cost to the user of the solution in dollars',
+        example: '7.50',
+    })
+    readonly cost: string;
 
     @ApiModelProperty()
-    readonly solutionParcel: ParcelDto;
+    readonly parcel: ParcelDto;
 }

@@ -1,18 +1,11 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Parcel } from './models/parcel.class';
 import { PackagingSolutionDto } from './models/packaging-solution.dto';
-
-export const MAX_SUPPORTED_PARCEL_WEIGHT: number = 25;
+import { packagingSolutions, MAX_SUPPORTED_PARCEL_WEIGHT } from './packaging-solutions';
 
 @Injectable()
 export class PackagingSolutionService {
     private readonly logger = new Logger(PackagingSolutionService.name);
-
-    private packagingSolutions: Map<string, Parcel> = new Map<string, Parcel>([
-        { solutionName: 'small', solutionParcel: new Parcel(200, 300, 150, 25) },
-        { solutionName: 'medium', solutionParcel: new Parcel(300, 400, 200, 25) },
-        { solutionName: 'large', solutionParcel: new Parcel(400, 600, 250, 25) },
-    ].map(i => [i.solutionName, i.solutionParcel]));
 
     /**
      * Resolves the minimal packaging solution from all known package solutions.
@@ -26,13 +19,12 @@ export class PackagingSolutionService {
             return null;
         }
 
-        for (const [solutionName, solutionParcel] of this.packagingSolutions.entries()) {
-            this.logger.log(`Testing parcel ${JSON.stringify(parcel.toDto())} inside ${solutionName} ${JSON.stringify(solutionParcel.toDto())}`);
+        for (const solution of packagingSolutions) {
+            this.logger.log(`Testing parcel ${JSON.stringify(parcel.toDto())} inside ${solution.name} ${JSON.stringify(solution.parcel)}`);
 
-            if (parcel.canFitInside(solutionParcel)) {
-                const packagingSolution: PackagingSolutionDto = { solutionName, solutionParcel: solutionParcel.toDto() };
-                this.logger.log(`Found a minimal packaging solution: ${JSON.stringify(packagingSolution)}`);
-                return packagingSolution;
+            if (parcel.canFitInside(Parcel.fromDto(solution.parcel))) {
+                this.logger.log(`Found a minimal packaging solution: ${JSON.stringify(solution)}`);
+                return solution;
             }
         }
         this.logger.warn(`Failed to resolve a packaging solution. Package exceeds supported dimensions.`);

@@ -1,9 +1,9 @@
+import 'reflect-metadata';
 import { Parcel } from './parcel.class';
 import { ParcelDto } from './parcel.dto';
+import { plainToClass } from 'class-transformer';
 
 describe('Parcel', () => {
-
-    const mockValidParcelDto: ParcelDto = { length: 100, breadth: 100, height: 100, weight: 1 };
 
     it('should be defined', () => {
         expect(Parcel).toBeDefined();
@@ -19,12 +19,13 @@ describe('Parcel', () => {
         });
 
         it('should statically create a Parcel class instance from a ParcelDto object', () => {
+            const mockValidParcelDto: ParcelDto = plainToClass(ParcelDto, { length: 100, breadth: 100, height: 100, weight: 1 });
             expect(Parcel.fromDto(mockValidParcelDto).constructor.name).toBe('Parcel');
         });
 
-        it('should create a ParcelDto object instance from a Parcel instance', () => {
+        it('should create a ParcelDto instance from a Parcel instance', () => {
             const result = new Parcel(100, 200, 300, 1).toDto();
-            expect(result.constructor.name).toBe('Object');
+            expect(result.constructor.name).toBe('ParcelDto');
             ['length', 'breadth', 'height', 'weight'].forEach(property => {
                 expect(result[property]).toBeDefined();
                 expect(result[property]).toBeTruthy();
