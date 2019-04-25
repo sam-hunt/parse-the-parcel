@@ -1,7 +1,6 @@
+// Import reflect-metadata here, as unlike controller and service tests, this does not initialise an app instance (which imports it in app.module).
 import 'reflect-metadata';
 import { Parcel } from './parcel.class';
-import { ParcelDto } from './parcel.dto';
-import { plainToClass } from 'class-transformer';
 
 describe('Parcel', () => {
 
@@ -16,20 +15,6 @@ describe('Parcel', () => {
             expect(result.breadth).toBe(200);
             expect(result.height).toBe(300);
             expect(result.weight).toBe(1);
-        });
-
-        it('should statically create a Parcel class instance from a ParcelDto object', () => {
-            const mockValidParcelDto: ParcelDto = plainToClass(ParcelDto, { length: 100, breadth: 100, height: 100, weight: 1 });
-            expect(Parcel.fromDto(mockValidParcelDto).constructor.name).toBe('Parcel');
-        });
-
-        it('should create a ParcelDto instance from a Parcel instance', () => {
-            const result = new Parcel(100, 200, 300, 1).toDto();
-            expect(result.constructor.name).toBe('ParcelDto');
-            ['length', 'breadth', 'height', 'weight'].forEach(property => {
-                expect(result[property]).toBeDefined();
-                expect(result[property]).toBeTruthy();
-            });
         });
     });
 

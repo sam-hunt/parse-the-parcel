@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
-import { PackagingSolutionDto } from './../src/packaging-solution/models/packaging-solution.dto';
+import { PackagingSolution } from '../src/packaging-solution/models/packaging-solution.class';
 
 describe('PackageSolutionController (e2e)', () => {
     let app;
@@ -37,7 +37,7 @@ describe('PackageSolutionController (e2e)', () => {
                 .send(aSmallParcel)
                 .expect(200)
                 .then(response => {
-                    const solution: PackagingSolutionDto = response.body;
+                    const solution: PackagingSolution = response.body;
                     expect(solution.name).toBe('small');
                     expect(solution.cost).toBe('5.00');
                 });
@@ -49,7 +49,7 @@ describe('PackageSolutionController (e2e)', () => {
                 .send(aMediumParcel)
                 .expect(200)
                 .then(response => {
-                    const solution: PackagingSolutionDto = response.body;
+                    const solution: PackagingSolution = response.body;
                     expect(solution.name).toBe('medium');
                     expect(solution.cost).toBe('7.50');
                 });
@@ -61,7 +61,7 @@ describe('PackageSolutionController (e2e)', () => {
                 .send(aLargeParcel)
                 .expect(200)
                 .then(response => {
-                    const solution: PackagingSolutionDto = response.body;
+                    const solution: PackagingSolution = response.body;
                     expect(solution.name).toBe('large');
                     expect(solution.cost).toBe('8.50');
                 });
@@ -73,7 +73,7 @@ describe('PackageSolutionController (e2e)', () => {
                 .send(aLargeMaxWeightParcel)
                 .expect(200)
                 .then(response => {
-                    const solution: PackagingSolutionDto = response.body;
+                    const solution: PackagingSolution = response.body;
                     expect(solution.name).toBe('large');
                     expect(solution.cost).toBe('8.50');
                 });

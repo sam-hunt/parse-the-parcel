@@ -1,27 +1,33 @@
-import { ParcelDto } from './parcel.dto';
-import { plainToClass } from 'class-transformer';
+import { IsNotEmpty, IsNumber, IsPositive, Min } from 'class-validator';
+import { ApiModelProperty } from '@nestjs/swagger';
 
 export class Parcel {
+    @IsNotEmpty()
+    @IsNumber()
+    @IsPositive()
+    @ApiModelProperty({ description: 'The length of the parcel in millimetres', example: 300 })
     readonly length: number;
-    readonly breadth: number;
-    readonly height: number;
-    readonly weight: number;
 
-    public static fromDto(parcelDto: ParcelDto): Parcel {
-        return new Parcel(parcelDto.length, parcelDto.breadth, parcelDto.height, parcelDto.weight);
-    }
+    @IsNotEmpty()
+    @IsNumber()
+    @IsPositive()
+    @ApiModelProperty({ description: 'The breadth of the parcel in millimetres', example: 400 })
+    readonly breadth: number;
+
+    @IsNotEmpty()
+    @IsNumber()
+    @IsPositive()
+    @ApiModelProperty({ description: 'The height of the parcel in millimetres', example: 200 })
+    readonly height: number;
+
+    @IsNotEmpty()
+    @IsNumber()
+    @IsPositive()
+    @ApiModelProperty({ description: 'The weight of the parcel in kilograms', example: 3 })
+    readonly weight: number;
 
     constructor(length: number, breadth: number, height: number, weight: number) {
         [this.length, this.breadth, this.height, this.weight] = [length, breadth, height, weight];
-    }
-
-    public toDto(): ParcelDto {
-        return plainToClass(ParcelDto, {
-            length: this.length,
-            breadth: this.breadth,
-            height: this.height,
-            weight: this.weight,
-        });
     }
 
     /**

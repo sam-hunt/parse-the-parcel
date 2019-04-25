@@ -1,9 +1,9 @@
-import { PackagingSolutionDto } from './models/packaging-solution.dto';
+import { PackagingSolution } from './models/packaging-solution.class';
 import { plainToClass } from 'class-transformer';
 
 export const MAX_SUPPORTED_PARCEL_WEIGHT: number = 25;
 
-export const packagingSolutions: PackagingSolutionDto[] = [
+export const packagingSolutions: PackagingSolution[] = [
     {
         name: 'small',
         cost: '5.00',
@@ -32,4 +32,4 @@ export const packagingSolutions: PackagingSolutionDto[] = [
             weight: 25,
         },
     },
-].map(object => plainToClass(PackagingSolutionDto, object));
+].map(object => plainToClass(PackagingSolution, object));

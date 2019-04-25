@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Parcel } from './models/parcel.class';
-import { PackagingSolutionDto } from './models/packaging-solution.dto';
+import { PackagingSolution } from './models/packaging-solution.class';
 import { packagingSolutions, MAX_SUPPORTED_PARCEL_WEIGHT } from './packaging-solutions';
 
 @Injectable()
@@ -11,7 +11,7 @@ export class PackagingSolutionService {
      * Resolves the minimal packaging solution from all known package solutions.
      * @param parcel The parcel to try putting inside all known packaging solutions.
      */
-    public getPackagingSolution(parcel: Parcel): PackagingSolutionDto {
+    public getPackagingSolution(parcel: Parcel): PackagingSolution {
         this.logger.log(`Attempting to resolve supported solution for parcel: ${JSON.stringify(parcel)}`);
 
         if (this.parcelIsTooHeavy(parcel)) {
@@ -20,9 +20,9 @@ export class PackagingSolutionService {
         }
 
         for (const solution of packagingSolutions) {
-            this.logger.log(`Testing parcel ${JSON.stringify(parcel.toDto())} inside ${solution.name} ${JSON.stringify(solution.parcel)}`);
+            this.logger.log(`Testing parcel ${JSON.stringify(parcel)} inside ${solution.name} ${JSON.stringify(solution.parcel)}`);
 
-            if (parcel.canFitInside(Parcel.fromDto(solution.parcel))) {
+            if (parcel.canFitInside(solution.parcel)) {
                 this.logger.log(`Found a minimal packaging solution: ${JSON.stringify(solution)}`);
                 return solution;
             }

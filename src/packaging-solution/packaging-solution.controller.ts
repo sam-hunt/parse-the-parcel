@@ -2,8 +2,7 @@ import { Controller, Post, Body, Res, Logger, HttpException, ValidationPipe, Use
 import { ApiUseTags, ApiOperation, ApiOkResponse, ApiPayloadTooLargeResponse, ApiBadRequestResponse } from '@nestjs/swagger';
 import { Response } from 'express';
 
-import { ParcelDto } from './models/parcel.dto';
-import { PackagingSolutionDto } from './models/packaging-solution.dto';
+import { PackagingSolution } from './models/packaging-solution.class';
 import { PackagingSolutionService } from './packaging-solution.service';
 import { Parcel } from './models/parcel.class';
 
@@ -23,7 +22,7 @@ export class PackagingSolutionController {
     })
     @ApiOkResponse({
         description: 'OK',
-        type: PackagingSolutionDto,
+        type: PackagingSolution,
     })
     @ApiBadRequestResponse({
         description: 'Parcel length, breadth, height and weight must be defined, positive numbers',
@@ -31,16 +30,16 @@ export class PackagingSolutionController {
     @ApiPayloadTooLargeResponse({
         description: 'Parcel dimensions or weight exceed all supported packaging solutions',
     })
-    public getPackagingSolution(@Body() parcelDto: ParcelDto, @Res() response: Response) {
-        this.logger.log(`Received the following parcel for parsing: ${JSON.stringify(parcelDto)}`);
-        const parcel: Parcel = Parcel.fromDto(parcelDto);
-        const packagingSolution: PackagingSolutionDto = this.packagingSolutionService.getPackagingSolution(parcel);
+    public getPackagingSolution(@Body() parcel: Parcel, @Res() response: Response) {
+        this.logger.log(`Received the following parcel for parsing: ${JSON.stringify(parcel)}`);
+        const packagingSolution: PackagingSolution = this.packagingSolutionService.getPackagingSolution(parcel);
 
         if (!packagingSolution) {
             const message = `Parcel dimensions or weight exceed all supported packaging solutions`;
             this.logger.warn(`Failed to resolve a packaging solution. Returning 413 - ${message}`);
             throw new HttpException(message, 413);
         }
+        this.logger.log(`Successfully resolved minimal packaging solution. Returning 200 - ${JSON.stringify(packagingSolution)}`);
         return response.send(packagingSolution);
     }
 }

@@ -1,7 +1,7 @@
 import { ApiModelProperty } from '@nestjs/swagger';
-import { ParcelDto } from './parcel.dto';
+import { Parcel } from './parcel.class';
 
-export class PackagingSolutionDto {
+export class PackagingSolution {
     @ApiModelProperty({
         description: 'The name of the packaging solution',
         example: 'medium',
@@ -15,5 +15,5 @@ export class PackagingSolutionDto {
     readonly cost: string;
 
     @ApiModelProperty()
-    readonly parcel: ParcelDto;
+    readonly parcel: Parcel;
 }

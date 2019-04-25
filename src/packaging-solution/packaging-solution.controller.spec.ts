@@ -1,20 +1,20 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PackagingSolutionController } from './packaging-solution.controller';
 import { PackagingSolutionService } from './packaging-solution.service';
-import { ParcelDto } from './models/parcel.dto';
 import { HttpException } from '@nestjs/common';
-import { PackagingSolutionDto } from './models/packaging-solution.dto';
+import { PackagingSolution } from './models/packaging-solution.class';
 import { plainToClass } from 'class-transformer';
+import { Parcel } from './models/parcel.class';
 
 describe('PackagingSolutionController', () => {
     let controller: PackagingSolutionController;
     let service: PackagingSolutionService;
 
-    const mockValidParcelDto: ParcelDto = plainToClass(ParcelDto, { length: 100, breadth: 100, height: 100, weight: 1 });
-    const mockValidPackagingSolution: PackagingSolutionDto = plainToClass(PackagingSolutionDto, {
+    const mockValidParcel: Parcel = plainToClass(Parcel, { length: 100, breadth: 100, height: 100, weight: 1 });
+    const mockValidPackagingSolution: PackagingSolution = plainToClass(PackagingSolution, {
         name: 'mockSolution',
         cost: '100.00',
-        parcel: mockValidParcelDto,
+        parcel: mockValidParcel,
     });
 
     beforeEach(async () => {
@@ -36,26 +36,17 @@ describe('PackagingSolutionController', () => {
             expect(controller.getPackagingSolution).toBeDefined();
         });
 
-        it(`should throw an HttpException on parcel input having invalid property values`, () => {
-            expect(() => controller.getPackagingSolution({
-                length: -1,
-                breadth: 'hello',
-                height: Infinity,
-                weight: 0,
-            } as unknown as ParcelDto, null)).toThrow(HttpException);
-        });
-
         it(`should call 'getPackagingSolution' on the PackagingSolutionService when the parcel input is valid`, () => {
             const mockSentResponse = 'mockSentResponse';
             const mockResponse = { send: () => mockSentResponse };
             jest.spyOn(service, 'getPackagingSolution').mockImplementation(() => mockValidPackagingSolution);
-            expect(controller.getPackagingSolution(mockValidParcelDto, mockResponse as any)).toBe(mockSentResponse);
+            expect(controller.getPackagingSolution(mockValidParcel, mockResponse as any)).toBe(mockSentResponse);
             expect(service.getPackagingSolution).toHaveBeenCalled();
         });
 
         it(`should throw an HttpException when a packaging solution can not be resolved for a valid parcel input`, () => {
             jest.spyOn(service, 'getPackagingSolution').mockImplementation(() => null);
-            expect(() => controller.getPackagingSolution(mockValidParcelDto, null)).toThrow(HttpException);
+            expect(() => controller.getPackagingSolution(mockValidParcel, null)).toThrow(HttpException);
         });
     });
 });
