@@ -2,18 +2,20 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PackagingSolutionController } from './packaging-solution.controller';
 import { PackagingSolutionService } from './packaging-solution.service';
 import { ParcelDto } from './models/parcel.dto';
-import { HttpException, NotImplementedException } from '@nestjs/common';
+import { HttpException } from '@nestjs/common';
 import { PackagingSolutionDto } from './models/packaging-solution.dto';
+import { plainToClass } from 'class-transformer';
 
 describe('PackagingSolutionController', () => {
     let controller: PackagingSolutionController;
     let service: PackagingSolutionService;
 
-    const mockValidParcelDto: ParcelDto = { length: 100, breadth: 100, height: 100, weight: 1 };
-    const mockValidPackagingSolution: PackagingSolutionDto = {
-        solutionName: 'mockSolution',
-        solutionParcel: mockValidParcelDto,
-    };
+    const mockValidParcelDto: ParcelDto = plainToClass(ParcelDto, { length: 100, breadth: 100, height: 100, weight: 1 });
+    const mockValidPackagingSolution: PackagingSolutionDto = plainToClass(PackagingSolutionDto, {
+        name: 'mockSolution',
+        cost: '100.00',
+        parcel: mockValidParcelDto,
+    });
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
